@@ -1,5 +1,6 @@
 const router = require('express').Router();
-
+const fileuploadcontroller = require('./routes/upload.route')
+router.use(fileuploadcontroller)
 router.get('/', (req, res) => {
     res.status(200).json({msg: "server up and running"});
 });
