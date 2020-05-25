@@ -9,9 +9,11 @@ const options = {
 exports.uploadSingleFile = multer(options)
 
 exports.addFile = async(req, res) => {
-    const sql = 'INSERT INTO imagemetadata (currentpath, nome, fieldname, originalname, encoding, mimetype, size) VALUES ($1,$2,$3,$4,$5,$6,$7)';
+    const sql = 'INSERT INTO imagemetadata (currentpath, nome, extension,fieldname, originalname, encoding, mimetype, size) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)';
     const dbi = req.app.get('dbinstance');
-    dbi.query(sql, [req.file.path, req.body.nome, req.file.fieldname, req.file.originalname, req.file.encoding, req.file.mimetype, req.file.size], (err) => {
+    const originalnamearr = req.file.originalname.split('.')
+    const extensao = originalnamearr[originalnamearr.length - 1]
+    dbi.query(sql, [req.file.path, req.body.nome, extensao, req.file.fieldname, req.file.originalname, req.file.encoding, req.file.mimetype, req.file.size], (err) => {
         if (err) {
             return res.status(500).json({ errors: [{location: "images", msg: err.detail, param: {}}]})
         }
