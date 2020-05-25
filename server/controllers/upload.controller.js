@@ -9,6 +9,6 @@ const options = {
 exports.uploadSingleFile = multer(options)
 
 exports.addFile = async(req, res) => {
-    console.log(req.body)
+    res.set('location', req.file.path)
     res.status(201).end()   
 }
