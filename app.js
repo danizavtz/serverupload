@@ -2,8 +2,9 @@ require('dotenv').config()
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
-
+const postgres = require('./lib/postgres.js');
 const app = express();
+
 app.disable('x-powered-by');
 cors({ credentials: true, origin: true });
 app.use(cors());
@@ -13,6 +14,7 @@ app.use('/static', express.static('uploads'));
 if (process.env.NODE_ENV !== 'test') {
   app.use(logger('dev'));
 }
+app.set('dbinstance', postgres)
 
 app.use(require('./server/index'));
 
