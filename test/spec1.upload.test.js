@@ -19,13 +19,23 @@ describe('#Upload', () => {
         });
     });
     describe('POST', () => {
-        it('Check get files return with success', (done) => {
+        it('Check validation error', (done) => {
+            api.post('/uploadfile')
+                    .set('Accept', 'application/json; charset=utf-8')
+                    .field('Content-Type', 'multipart/form-data')
+                    .attach("image", 'test/tstimages/Snake_River_(5mb).jpg')
+                    .expect(400)
+                    .end(function(err, res) {
+                        if (err) throw err;
+                        expect(res.status).to.equal(400);
+                        done();
+                    });
+                });
+        it('Check upload file with success', (done) => {
         api.post('/uploadfile')
                 .set('Accept', 'application/json; charset=utf-8')
                 .field('Content-Type', 'multipart/form-data')
-                // .field("width",10)
-                // .field("height",10)
-                // .field("sequence", 1)
+                .field("login","abc123")
                 .attach("image", 'test/tstimages/Snake_River_(5mb).jpg')
                 .expect(201)
                 .end(function(err, res) {
