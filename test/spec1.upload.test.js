@@ -1,11 +1,28 @@
 process.env.NODE_ENV = 'test';
-const expect = require('chai').expect,
+const fs = require('fs'),
+    expect = require('chai').expect,
     supertest = require('supertest'),
     app = require('../app'),
     server = app.listen(),
-    api = supertest(server);
+    api = supertest(server),
+    pg = require('../lib/postgres'),
+    drop = fs.readFileSync(__dirname + '/../sql/drop.sql').toString(),
+    create = fs.readFileSync(__dirname + '/../sql/create.sql').toString();
     
 describe('#Upload', () => {
+    before((done) => {
+        pg.query(drop, (err) => {
+            if (err){
+                throw err;
+            }
+            pg.query(create, (err) => {
+                if (err){
+                    throw err;
+                }
+                done();
+            });
+        });
+    });
     describe('GET', () => {
         it('Check get files return with success', (done) => {
             api.get('/files')
