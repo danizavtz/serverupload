@@ -1,5 +1,5 @@
 --using metadata from multer lib
-CREATE TABLE imagemetadata (
+CREATE TABLE IF NOT EXISTS imagemetadata (
     id SERIAL PRIMARY KEY,
     currentpath VARCHAR(64),
     nome VARCHAR(64),

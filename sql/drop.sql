@@ -1,1 +1,1 @@
-DROP TABLE imagemetadata;
+DROP TABLE IF EXISTS imagemetadata;
