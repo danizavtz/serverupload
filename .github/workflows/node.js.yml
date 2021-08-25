@@ -55,5 +55,5 @@ jobs:
         PGHOST: postgres
         secret: GH
         PORT: 3000
-        CODECOV_TOKEN: {{ secrets.CODECOV_TOKEN }}
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     - run: npm i -g codecov && npm run coverage:report && codecov -t ${{ secrets.CODECOV_TOKEN }}
